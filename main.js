@@ -1,11 +1,12 @@
 const express = require('express')
 const app = express()
-const port = 8080
+const Port = process.env.Port || 8080
 var session = require('express-session')
- 
+var path = require('path');
+var router = express.Router();  
 
 var sess = {
-  secret: 'nntu adtekdev',
+  secret: 'NhatMinh123-Man',
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -119,7 +120,6 @@ function viewHome(request, response) {
 
 /// ***************** ***************** *****************
 app.get('/login', viewLogin);
-
 
 
 /// ***************** ***************** *****************
