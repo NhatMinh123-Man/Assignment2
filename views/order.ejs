@@ -1,0 +1,135 @@
+<%- include('partials/header') -%>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">Toys</a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="http://localhost:8080">Trang Chủ <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://localhost:8080/products">Sản Phẩm</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="http://localhost:8080/login">Đăng Nhập</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:8080/order">Giỏ Hàng</a>
+        
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Tìm Kiếm..." aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm Kiếm</button>
+    </form>
+  </div>
+</nav>
+<HR>
+    <div class="alert alert-warning">
+      <H5>TẠO HÓA ĐƠN BÁN HÀNG</H5>
+    </div>
+<HR>
+
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                <H1>Các sản phẩm</H1>
+            </div>
+            
+                <div class="row">
+				<table width = "100%">
+                <% for (var i = 0; i < productlist.length; i++) { %>
+						<tr style="border-width: 5px;border-color: rgb(33, 158, 81);padding-bottom: 15px;">
+							<td>
+								<img width="300px" height="230px" src= <%= productlist[i].urlImg %>>
+							</td>
+							<td > 
+								<H3><%= productlist[i].Name %></H3>
+                                <p><b>Price: </b>
+                                <%= productlist[i].Price%> / <%= productlist[i].Unit%> </p>
+								
+								<p><b>Information: </b></p>                                
+                                <p><%= productlist[i].Information%> </p>
+								<button type="button" class="btn btn-success" onclick="themvao('<%= productlist[i]._id %>', '<%= productlist[i].Name %>', '<%= productlist[i].Price%>' )">Thêm vào</button>
+							</td>
+						</tr>
+                    <% } %>
+					
+				</table>
+				</div>
+					
+
+            
+        </div>
+
+        <div class="col-sm-4">
+            <div class="row">
+                <H5>GIỎ hàng</H5>
+            </div>
+            <div class="row" id="giohang">
+                <table width="100%" id="giohangTab" style="border-width: 5px;border-color: rgb(33, 158, 81);padding-bottom: 15px;">
+				
+				</table>
+            </div>
+            
+            <form action="/payment">
+            <input  name="dssp" id="dssp" type="hidden" value="">
+            <button type="button" class="btn btn-success" onclick="submit()">Thanh toán</button>
+            </form>
+        </div>        
+      </div>
+
+<script>
+    var dsspmua = "";
+    var giohang = {};
+
+    function addGioHang(xID, xName, xPrice) {
+        var hangthem = giohang[xID];
+
+        console.log(hangthem);
+
+        if (hangthem) {
+            hangthem["soluong"] += 1
+        } else {
+            hangthem = { "ten" : xName, "gia" : xPrice, "soluong" : 1};
+        }
+        giohang[xID] = hangthem;
+
+        console.log(hangthem);
+
+    }
+
+    function themvao(xID, xName, xPrice) {
+        //alert(xID + "  " + xName);
+        var x = document.getElementById("giohangTab");
+        var ds = document.getElementById("dssp");
+
+        /// ADD
+        addGioHang(xID, xName, xPrice);
+
+        /// show list
+        var xkeys = Object.keys(giohang);
+        var showlist = "";
+        dsspmua = "";
+
+        for(j=0; j<xkeys.length; j++)
+        {
+            dsspmua += xkeys[j] + "_" + giohang[ xkeys[j] ]["soluong"] + "_";
+            showlist += "<tr> <td> " 
+                + giohang[ xkeys[j] ]["ten"] 
+                + " </td> <td> "  + giohang[ xkeys[j] ]["soluong"] + " </td> <td> "
+                + giohang[ xkeys[j] ]["gia"] + " </td></tr>";
+        };
+
+
+        x.innerHTML = showlist;
+        ds.value = dsspmua;
+    }
+
+
+</script>
+
+<%- include('partials/footer') -%>

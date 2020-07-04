@@ -1,0 +1,51 @@
+<%- include('partials/header') -%>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Toys</a>
+  
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="http://localhost:8080">Trang Chủ <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:8080/products">Sản Phẩm</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="http://localhost:8080/login">Đăng Nhập</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://localhost:8080/order">Giỏ Hàng</a>
+          
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Tìm Kiếm..." aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm Kiếm</button>
+      </form>
+    </div>
+  </nav>
+
+<div class="header"></div>
+<img  name="image" src="images/banner1.jpg" alt="" width="100%">
+<script type="text/javascript">
+    window.onload = function(){
+      setTimeout("switch_Image()", 1000);
+    }
+    var current = 1;
+    var num_image = 4;
+    function switch_Image(){
+        current++;
+        document.images['image'].src ='images/banner' + current + '.jpg';
+       if(current < num_image){
+         setTimeout("switch_Image()", 1000);
+       }else if(current == num_image){
+         current = 0;
+         setTimeout("switch_Image()", 1000);
+       }
+   }
+  </script>
+  
+<%- include('partials/footer') -%>
